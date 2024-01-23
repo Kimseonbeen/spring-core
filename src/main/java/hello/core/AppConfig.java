@@ -26,6 +26,10 @@ public class AppConfig {
      *  중복도 제거됨
      */
 
+
+    /**
+     * 주의 : 빈 이름은 항상 다른 이름을 부여 !!!
+     */
     @Bean
     public MemberService memberService(){
         return new MemberServiceImpl(memberRepository());
