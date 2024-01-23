@@ -1,6 +1,7 @@
 package hello.core.order;
 
 import hello.core.discount.DiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
@@ -8,6 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrderServiceImpl implements OrderService {
 
+    // 변경 전
+    // 변경 전에는 클라이언트 코드인 주문 서비스 구현체도 함꼐 변경해야함
+    // 주문 서비스 클라이언트가 인터페이스인 DiscountPolicy뿐만 아니라, 구체 클래스인 FixDiscountPolicy도 함께 의존 -> DIP 위반
+    // private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+
+
+    // 변경 후
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
@@ -31,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
      * 2. 다형성도 활용하고, 인터페이스와 구현 객체를 분리했다 -> OK
      * 3. OCP, DIP 같은 객체지향 설계 원치를 충실히 준수했다
      * --> 그렇게 보이지만 사실은 아니다.
-     * DIP: 주문서비스 클라이언트(OrderServiceImpl)는 'DiscountPolicy 인터페이스에 의조하면서 DIP를 잘 지킨거같은데 ??
+     * DIP: 주문서비스 클라이언트(OrderServiceImpl)는 'DiscountPolicy 인터페이스에 의존하면서 DIP를 잘 지킨거같은데 ??
      * -> 클래스 의존관계를 분석해 보자. 추상(인터페이스)뿐만 아니라 "구체(구현)클래스에도 의존"하고 있다.
      *  - 추상(인터페이스) 의존 : DiscountPolicy
      *  - 구체(구현) 클래스 : FixDiscountPolicy, RateDiscountPolicy
