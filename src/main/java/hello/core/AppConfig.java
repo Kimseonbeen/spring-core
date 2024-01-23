@@ -1,6 +1,8 @@
 package hello.core;
 
+import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
@@ -14,12 +16,27 @@ public class AppConfig {
      * AppConfig는 생성한 객체 인스턴스의 참조를 생성자를 통해서 주입(연결) 해준다.
      */
 
+    /**
+     *  구현객체를 리펙토링을 통해 메서드로 뺀 덕분에
+     *  역할과 구현이 한 눈에 보이게 되었다 !
+     *  중복도 제거됨
+     */
+
     public MemberService memberService(){
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    private MemoryMemberRepository memberRepository() {
+        return new MemoryMemberRepository();
     }
 
     public OrderService orderService() {
-        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
+
+    public DiscountPolicy discountPolicy() {
+//        return new FixDiscountPolicy();
+         return new RateDiscountPolicy();
     }
 
 }
