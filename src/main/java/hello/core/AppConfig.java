@@ -30,16 +30,35 @@ public class AppConfig {
     /**
      * 주의 : 빈 이름은 항상 다른 이름을 부여 !!!
      */
+
+    // @Bean memberService ->  new MemoryMemberRepository()
+    // @Bean orderService ->  new MemoryMemberRepository()
+
+    // 우리의 의도
+    // call AppConfig.memberService
+    // call AppConfig.memberRepository
+    // call AppConfig.memberRepository
+    // call AppConfig.orderService
+    // call AppConfig.memberRepository
+
+    // 실행 결과
+    // call AppConfig.memberService
+    // call AppConfig.memberRepository  // 중복 3번 호출되어야하는데 1번만 호출이 됨
+    // call AppConfig.orderService
+    // -> 비밀은 @Configuration
     @Bean
     public MemberService memberService(){
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
     @Bean
     public OrderService orderService() {
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
     @Bean

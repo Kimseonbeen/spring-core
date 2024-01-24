@@ -50,11 +50,9 @@ public class OrderServiceImpl implements OrderService {
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
 //    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
-    /**
-     * 변경 !
-     * 이렇게 변경시 discountPolicy는 null이라 오류 발생 !
-     *
-     * 해결 방안 !
-     * 누군가가 클라이언트인 OrderServiceImpl에 DiscountPolicy의 구현객체를 대신 생성하고 주입해주어야한다. !!!
-     */
+
+    // 테스트용
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
+    }
 }
