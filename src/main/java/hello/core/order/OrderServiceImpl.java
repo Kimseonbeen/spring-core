@@ -21,8 +21,13 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-    @Autowired
+    /**
+     * 생성자가 단 1개만 존재 할 시 @AutoWired 생략 가능
+     */
+    // @Autowired  ////ac.getBean(MemberRepository.class), ac.getBean(DiscountPolicy.class);
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        System.out.println("memberRepository = " + memberRepository);
+        System.out.println("discountPolicy = " + discountPolicy);
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
