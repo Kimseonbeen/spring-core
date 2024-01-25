@@ -16,6 +16,9 @@ public class OrderServiceImpl implements OrderService {
     // 주문 서비스 클라이언트가 인터페이스인 DiscountPolicy뿐만 아니라, 구체 클래스인 FixDiscountPolicy도 함께 의존 -> DIP 위반
     // private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
+// 필드 인젝션은 안쓰기를 권장 !
+//    @Autowired private MemberRepository memberRepository;
+//    @Autowired private DiscountPolicy discountPolicy;
 
     // 변경 후
     private final MemberRepository memberRepository;
