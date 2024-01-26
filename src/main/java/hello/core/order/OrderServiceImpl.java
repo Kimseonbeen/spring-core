@@ -5,10 +5,12 @@ import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor        // final이 붙은 필수값을 가지고 생성자를 만들어준다.
 public class OrderServiceImpl implements OrderService {
 
     // 변경 전
@@ -28,12 +30,14 @@ public class OrderServiceImpl implements OrderService {
      * 생성자가 단 1개만 존재 할 시 @AutoWired 생략 가능
      */
     // @Autowired  ////ac.getBean(MemberRepository.class), ac.getBean(DiscountPolicy.class);
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        System.out.println("memberRepository = " + memberRepository);
-        System.out.println("discountPolicy = " + discountPolicy);
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+
+    /**
+     * LomBok @RequiredArgsConstructor로 인해 따로 코드를 작성할 필요가 없어짐
+     */
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {

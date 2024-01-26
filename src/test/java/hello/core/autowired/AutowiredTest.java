@@ -18,6 +18,10 @@ public class AutowiredTest {
 
     static class TestBean {
 
+        /**
+         * Member는 스프링 빈에 등록되지 않아
+         * @AutoWried으로 의존성 주입을 한들 작동하지가 않는다
+         */
         @Autowired(required = false)        // 의존 관계가 없을 시 수정자 메서드 자체가 호출이 안됌 !
         public void setNoBean1(Member noBean1) {    // Member는 스프링 빈에 등록되어 있지 않음 !
             System.out.println("noBean1 = " + noBean1);
