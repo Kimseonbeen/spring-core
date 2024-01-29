@@ -1,5 +1,6 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
@@ -7,10 +8,11 @@ import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor        // final이 붙은 필수값을 가지고 생성자를 만들어준다.
+//@RequiredArgsConstructor        // final이 붙은 필수값을 가지고 생성자를 만들어준다.
 public class OrderServiceImpl implements OrderService {
 
     // 변경 전
@@ -33,11 +35,12 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * LomBok @RequiredArgsConstructor로 인해 따로 코드를 작성할 필요가 없어짐
+     * @Qualifier("mainDiscountPolicy") 애노테이션을 통해 등록한 빈 이름을 지정 할 수 있다
      */
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
